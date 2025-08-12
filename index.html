@@ -452,54 +452,67 @@
   </footer>
 
   <script>
-    // ========== HERO BACKGROUND + CTA COLOR ROTATION ==========
-    const images = [
-      'images/img-1a.jpg',
-      'images/img-2.png',
-      'images/img-3a.jpg',
-      'images/img-4.jpg',
-      'images/img-5a.png'
-    ];
+  const images = [
+    'images/img-1a.jpg',
+    'images/img-2.png',
+    'images/img-3a.jpg',
+    'images/img-4.jpg',
+    'images/img-5a.png'
+  ];
 
-    const colors = [
-      '#fa2837', // img-1
-      '#40bdbb', // img-2
-      '#3677a6', // img-3
-      '#ff6700', // img-4
-      '#f49d03'  // img-5
-    ];
+  const colors = [
+    '#fa2837', // img-1
+    '#40bdbb', // img-2
+    '#3677a6', // img-3
+    '#ff6700', // img-4
+    '#f49d03'  // img-5
+  ];
 
-    const hero = document.querySelector('.hero');
-    const ctaBtn = document.querySelector('.cta-btn');
+  const hero = document.querySelector('.hero');
+  const ctaBtn = document.querySelector('.cta-btn');
+  const header = document.querySelector('.header');
 
-    // Create background layers
-    images.forEach((img, i) => {
-      const div = document.createElement('div');
-      div.classList.add('hero-bg');
-      div.style.backgroundImage = `url(${img})`;
-      hero.appendChild(div);
+  // --- Function to adjust hero padding + height ---
+  function adjustHeroPadding() {
+    const headerHeight = header.offsetHeight;
+    hero.style.paddingTop = headerHeight + "px";
+    hero.style.minHeight = `calc(100vh - ${headerHeight}px)`;
+  }
+
+  // Run once at start and on resize
+  adjustHeroPadding();
+  window.addEventListener("resize", adjustHeroPadding);
+
+  // --- Create background layers ---
+  images.forEach((img, i) => {
+    const div = document.createElement('div');
+    div.classList.add('hero-bg');
+    div.style.backgroundImage = `url(${img})`;
+    hero.appendChild(div);
+  });
+
+  const slides = document.querySelectorAll('.hero-bg');
+  let current = 0;
+
+  function showSlide(index) {
+    slides.forEach((s, i) => {
+      s.classList.toggle('active', i === index);
     });
 
-    const slides = document.querySelectorAll('.hero-bg');
-    let current = 0;
+    // Update CTA button color gradient
+    document.documentElement.style.setProperty('--cta-bg-color', colors[index]);
+  }
 
-    function showSlide(index) {
-      slides.forEach((s, i) => {
-        s.classList.toggle('active', i === index);
-      });
+  showSlide(current);
 
-      // Update CTA button color gradient
-      document.documentElement.style.setProperty('--cta-bg-color', colors[index]);
-    }
-
+  setInterval(() => {
+    current = (current + 1) % slides.length;
     showSlide(current);
+  }, 6000); // 6s per image
+</script>
 
-    setInterval(() => {
-      current = (current + 1) % slides.length;
-      showSlide(current);
-    }, 6000); // 6s per image
-  </script>
 
 </body>
+
 
 </html>
