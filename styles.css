@@ -235,7 +235,6 @@ a:hover {
 /* Hero Section */
 .hero {
   position: relative;
-  height: 85vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1322,5 +1321,6 @@ a:hover {
 .hero-text-bg:nth-of-type(2) {
   margin-top: -1.5rem; /* Pulls the paragraph up */
 }
+
 
 
